@@ -1,0 +1,22 @@
+.cart-item 
+{
+    height: 80px;
+    display: flex;
+    width: 100%;
+    margin-bottom: 10px;
+
+    img {
+        width: 30%;
+    }
+    .item-details {
+        justify-content: center;
+        display: flex;
+        align-items: flex-start;
+        flex-direction: column;
+        margin-left: 20px;
+
+        .name {
+            font-size: 16px;
+        }
+    }
+}
