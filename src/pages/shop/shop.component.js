@@ -2,14 +2,16 @@ import React from 'react';
 // import { connect } from 'react-redux';
 // import { createStructuredSelector } from 'reselect';
 // import { selectShopCollections } from '../../components/redux/shop/shop-selector';
-
+import { Route } from 'react-router-dom';
 
 
 import CollectionOverview from '../../components/collection-overview/collection-overview.component';
+import CollectionCategory from '../../components/collection-category/collection-category.component';
 
-const Shop = () => (
+const Shop = ({ match }) => (
     <div className="shop-page">
-        <CollectionOverview />
+        <Route exact path={match.path} component={CollectionOverview}/>
+        <Route path={`${match.path}/:category`} component={CollectionCategory}/>
     </div>
 );
 

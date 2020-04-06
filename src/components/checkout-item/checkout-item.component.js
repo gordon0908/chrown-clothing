@@ -5,11 +5,11 @@ import { removeItem, addItem, reduceItem } from '../redux/cart/cart-action';
 import './checkout-item.scss';
 
 const CheckoutItem = ({cartItem, removeItem, addItem, reduceItem}) => {
-    const { id, imageUrl, name, price, quantity } = cartItem;
+    const { imageUrl, name, price, quantity } = cartItem;
     return (
         <div className="checkout-item">
             <div className="image-container">
-                <img src={imageUrl} />
+                <img src={imageUrl} alt="test image"/>
             </div>
 
             <span className="name">{name}</span>
