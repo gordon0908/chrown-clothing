@@ -15,6 +15,7 @@ const CollectionOverview = ({ collections }) => (
     </div>
 );
 
+
 const mapDispatchToProps = createStructuredSelector({
     collections: selectCollectionForPreview
 });
