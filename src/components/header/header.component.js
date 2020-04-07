@@ -10,28 +10,29 @@ import ShoppingIcon from '../shopping-icon/shopping-icon.component';
 import { auth } from '../../firebase/firebase.util';
 import CartDropdown from '../cart-dropdown/cart-dropdown.component';
 
-
-import "./header.component.scss";
+import { HeaderContainer, LogoContainer, HeaderOptions, HeaderOptionLink, HeaderOptionDiv } from './header.styled';
+// import "./header.component.scss";
 
 const Header = ({ currentUser, hidden }) => {
     return (
-        <div className="header">
-            <Link to="/" className="logo-container">
-                <Logo className="logo"/>
-            </Link>
-            <div className="options">
-                <Link to="/shop" className="option">Shop</Link>
-                <Link to="/contact" className="option">Contact</Link>
+        <HeaderContainer>
+            <LogoContainer to="/">
+                <Logo/>
+            </LogoContainer>
+            <HeaderOptions>
+                <HeaderOptionLink to="/shop">Shop</HeaderOptionLink>
+                <HeaderOptionLink to="/contact">Contact</HeaderOptionLink>
                 {
-                    currentUser? <div className="option" onClick={()=>auth.signOut()}>Sign Out</div> : <Link to="/signin" className="option">Sign In</Link>
+                    currentUser? <HeaderOptionLink as="div" onClick={()=>auth.signOut()}>Sign Out</HeaderOptionLink> : 
+                    <HeaderOptionLink to="/signin">Sign In</HeaderOptionLink>
                 }
                 <ShoppingIcon />
-            </div>
+            </HeaderOptions>
             {
                 hidden? null : <CartDropdown />
             }
             
-        </div>
+        </HeaderContainer>
     )
 };
 

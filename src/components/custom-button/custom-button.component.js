@@ -1,9 +1,18 @@
 import React from 'react';
 
-import './custom-button.scss';
+import { CustomeButtonContainer } from './customer-button.styled';
 
-export default ({ children, IsGoogleButton, invented, ...otherProps}) => (
-    <button className={`${invented? 'invented':''} ${IsGoogleButton? 'google-button' : ''} custom-button`} {...otherProps}>
+export default ({ children, ...otherProps}) => (
+    <CustomeButtonContainer {...otherProps}>
         {children}
-    </button>
+    </CustomeButtonContainer>
 );
+
+
+// import './custom-button.scss';
+
+// export default ({ children, IsGoogleButton, invented, ...otherProps}) => (
+//     <button className={`${invented? 'invented':''} ${IsGoogleButton? 'google-button' : ''} custom-button`} {...otherProps}>
+//         {children}
+//     </button>
+// );
