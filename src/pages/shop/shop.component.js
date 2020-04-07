@@ -1,21 +1,46 @@
-import React from 'react';
-// import { connect } from 'react-redux';
+import React, { Component } from 'react';
+
+import { connect } from 'react-redux';
 // import { createStructuredSelector } from 'reselect';
 // import { selectShopCollections } from '../../components/redux/shop/shop-selector';
 import { Route } from 'react-router-dom';
-
+import { firestore, convertCollectionsSnapshotToMap } from '../../firebase/firebase.util';
+import { addShop } from '../../components/redux/shop/shop-action';
 
 import CollectionOverview from '../../components/collection-overview/collection-overview.component';
 import CollectionCategory from '../../components/collection-category/collection-category.component';
 
-const Shop = ({ match }) => (
-    <div className="shop-page">
-        <Route exact path={match.path} component={CollectionOverview}/>
-        <Route path={`${match.path}/:category`} component={CollectionCategory}/>
-    </div>
-);
+class Shop extends Component {
+    componentDidMount() {
+        const collectionRef = firestore.collection('collections');
+        collectionRef.onSnapshot(snopshot => {
+            const data = convertCollectionsSnapshotToMap(snopshot);
+            // console.log('=====')
+            this.props.addShop(data);
+            // console.log(data)
+        });
+    }
+    render() {
+        const { match } = this.props;
+        return (
+            <div className="shop-page">
+                <Route exact path={match.path} component={CollectionOverview}/>
+                <Route path={`${match.path}/:category`} component={CollectionCategory}/>
+            </div>
+        )
+    }
+};
 
-export default Shop;
+
+// const Shop = ({ match }) => (
+//     <div className="shop-page">
+//         <Route exact path={match.path} component={CollectionOverview}/>
+//         <Route path={`${match.path}/:category`} component={CollectionCategory}/>
+//     </div>
+// );
+
+
+export default connect(null, { addShop })(Shop);
 
 
 // import { SHOP_DATA } from './shop.data';

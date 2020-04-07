@@ -3,8 +3,10 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import { auth, createUser } from './firebase/firebase.util';
+import { auth, createUser, createCollection } from './firebase/firebase.util';
 import { selectCurrentUser } from './components/redux/user/user-selector';
+
+import { selectCollectionForPreview } from './components/redux/shop/shop-selector';
 
 import Header from './components/header/header.component';
 import Homepage from './pages/homepage/homepage.component';
@@ -50,6 +52,9 @@ class App extends React.Component {
       }
 
       addCurrentUser(currentUser);
+
+
+      // createCollection('collections', this.props.shopCollection.map(({ title, items }) => ({ title, items })));
     });
   }
   componentWillUnmount() {
@@ -79,7 +84,8 @@ class App extends React.Component {
 // });
 
 const mapStateToProps = createStructuredSelector({
-  currentUser: selectCurrentUser
+  currentUser: selectCurrentUser,
+  shopCollection: selectCollectionForPreview
 });
 
 const mapDispatchToProps = dispatch => ({
