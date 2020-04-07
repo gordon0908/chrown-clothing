@@ -9,6 +9,7 @@ export default (state = defaultState, action) => {
     switch(action.type) {
         case ADD_SHOP:
             return {
+                ...state,
                 collections: action.payload
             }
 

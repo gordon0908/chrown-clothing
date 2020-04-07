@@ -6,26 +6,35 @@ import { connect } from 'react-redux';
 import { Route } from 'react-router-dom';
 import { firestore, convertCollectionsSnapshotToMap } from '../../firebase/firebase.util';
 import { addShop } from '../../components/redux/shop/shop-action';
+import { WithSpinner } from '../../components/withspinner/withspinner.component';
 
 import CollectionOverview from '../../components/collection-overview/collection-overview.component';
 import CollectionCategory from '../../components/collection-category/collection-category.component';
 
+const CollectionOverViewHOC = WithSpinner(CollectionOverview);
+const CollectionCategoryOC = WithSpinner(CollectionCategory);
+
 class Shop extends Component {
+    state = {
+        loading: true
+    }
     componentDidMount() {
         const collectionRef = firestore.collection('collections');
         collectionRef.onSnapshot(snopshot => {
             const data = convertCollectionsSnapshotToMap(snopshot);
-            // console.log('=====')
+
             this.props.addShop(data);
-            // console.log(data)
+            this.setState({ loading: false })
         });
     }
     render() {
         const { match } = this.props;
+        const { loading } = this.state;
+        
         return (
             <div className="shop-page">
-                <Route exact path={match.path} component={CollectionOverview}/>
-                <Route path={`${match.path}/:category`} component={CollectionCategory}/>
+                <Route exact path={match.path} render={props => <CollectionOverViewHOC loading={loading} {...props}/>}/>
+                <Route path={`${match.path}/:category`} render={props => <CollectionCategoryOC loading={loading} {...props}/>}/>
             </div>
         )
     }
