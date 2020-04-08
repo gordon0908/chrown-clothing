@@ -33,6 +33,6 @@ export const selectShopFetchLoading = createSelector(
 export const selectShopCollectionFlag = createSelector(
     [selectShop],
     shop => {
-        return Object.keys(shop.collections).length > 0;
+        return Object.keys(shop.collections).length < 1;
     }
 );
