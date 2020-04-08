@@ -1,1 +1,4 @@
 export const ADD_SHOP = "ADD_SHOP";
+export const FETCH_SHOP_START = "FETCH_SHOP_START";
+export const FETCH_SHOP_SUCCESS = "FETCH_SHOP_SUCCESS";
+export const FETCH_SHOP_FAILED = "FETCH_SHOP_FAILED";

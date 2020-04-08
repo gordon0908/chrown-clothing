@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
-// import { createStructuredSelector } from 'reselect';
+import { createStructuredSelector } from 'reselect';
 // import { selectShopCollections } from '../../components/redux/shop/shop-selector';
 import { Route } from 'react-router-dom';
+
 import { firestore, convertCollectionsSnapshotToMap } from '../../firebase/firebase.util';
-import { addShop } from '../../components/redux/shop/shop-action';
+import { fetchShop } from '../../components/redux/shop/shop-action';
 import { WithSpinner } from '../../components/withspinner/withspinner.component';
+import { selectShopCollectionFlag } from '../../components/redux/shop/shop-selector';
 
 import CollectionOverview from '../../components/collection-overview/collection-overview.component';
 import CollectionCategory from '../../components/collection-category/collection-category.component';
@@ -15,26 +17,43 @@ const CollectionOverViewHOC = WithSpinner(CollectionOverview);
 const CollectionCategoryOC = WithSpinner(CollectionCategory);
 
 class Shop extends Component {
-    state = {
-        loading: true
-    }
+    // state = {
+    //     loading: true
+    // }
     componentDidMount() {
-        const collectionRef = firestore.collection('collections');
+        this.props.fetchShop();
+        // const collectionRef = firestore.collection('collections');
+
+        /*
         collectionRef.onSnapshot(snopshot => {
             const data = convertCollectionsSnapshotToMap(snopshot);
 
             this.props.addShop(data);
             this.setState({ loading: false })
-        });
+        });*/
+        /*
+        collectionRef.get().then(
+            snopshot => {
+                const data = convertCollectionsSnapshotToMap(snopshot);
+    
+                this.props.addShop(data);
+                this.setState({ loading: false })
+            }
+        );*/
+
+        //promise
+        //collectionRef.get().then()
+        //fetch function
+        //fetch(url).then(response=>response.json()).then()
     }
     render() {
-        const { match } = this.props;
-        const { loading } = this.state;
-        
+        const { match, loading } = this.props;
+        // const { loading } = this.state;
+
         return (
             <div className="shop-page">
-                <Route exact path={match.path} render={props => <CollectionOverViewHOC loading={loading} {...props}/>}/>
-                <Route path={`${match.path}/:category`} render={props => <CollectionCategoryOC loading={loading} {...props}/>}/>
+                <Route exact path={match.path} render={props => <CollectionOverViewHOC loading={!loading} {...props}/>}/>
+                <Route path={`${match.path}/:category`} render={props => <CollectionCategoryOC loading={!loading} {...props}/>}/>
             </div>
         )
     }
@@ -48,8 +67,12 @@ class Shop extends Component {
 //     </div>
 // );
 
+const mapStateToProps = createStructuredSelector({
+    loading: selectShopCollectionFlag
+})
 
-export default connect(null, { addShop })(Shop);
+
+export default connect(mapStateToProps, { fetchShop })(Shop);
 
 
 // import { SHOP_DATA } from './shop.data';

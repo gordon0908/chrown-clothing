@@ -23,4 +23,16 @@ export const selecShopCategory = category => createSelector(
 export const selectCollectionForPreview = createSelector(
     [selectShopCollections],
     collections => Object.keys(collections).map(key => collections[key])
-)
+);
+
+export const selectShopFetchLoading = createSelector(
+    [selectShop],
+    shop => shop.loading
+);
+
+export const selectShopCollectionFlag = createSelector(
+    [selectShop],
+    shop => {
+        return Object.keys(shop.collections).length > 0;
+    }
+);
