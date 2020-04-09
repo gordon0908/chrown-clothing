@@ -9,11 +9,12 @@ import { ReactComponent as Logo } from '../../assets/chrown.svg';
 import ShoppingIcon from '../shopping-icon/shopping-icon.component';
 import { auth } from '../../firebase/firebase.util';
 import CartDropdown from '../cart-dropdown/cart-dropdown.component';
+import { sagaSignOutStart } from '../redux/user/user-action';
 
 import { HeaderContainer, LogoContainer, HeaderOptions, HeaderOptionLink, HeaderOptionDiv } from './header.styled';
 // import "./header.component.scss";
 
-const Header = ({ currentUser, hidden }) => {
+const Header = ({ currentUser, hidden, sagaSignOutStart }) => {
     return (
         <HeaderContainer>
             <LogoContainer to="/">
@@ -23,7 +24,7 @@ const Header = ({ currentUser, hidden }) => {
                 <HeaderOptionLink to="/shop">Shop</HeaderOptionLink>
                 <HeaderOptionLink to="/contact">Contact</HeaderOptionLink>
                 {
-                    currentUser? <HeaderOptionLink as="div" onClick={()=>auth.signOut()}>Sign Out</HeaderOptionLink> : 
+                    currentUser? <HeaderOptionLink as="div" onClick={sagaSignOutStart}>Sign Out</HeaderOptionLink> : 
                     <HeaderOptionLink to="/signin">Sign In</HeaderOptionLink>
                 }
                 <ShoppingIcon />
@@ -46,4 +47,4 @@ const mapStateToProps = createStructuredSelector({
     hidden: selectCartHidden
 });
 
-export default connect(mapStateToProps)(Header);
+export default connect(mapStateToProps, { sagaSignOutStart })(Header);

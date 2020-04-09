@@ -12,7 +12,7 @@ import Header from './components/header/header.component';
 import Homepage from './pages/homepage/homepage.component';
 import Shop from './pages/shop/shop.component';
 import SignInAndSignUp from './pages/sign-in-and-sign-up/sign-in-and-sign-up.component';
-import { createCurrentUser } from './components/redux/user/user-action';
+import { createCurrentUser, checkUserSession } from './components/redux/user/user-action';
 import Checkout from './pages/checkout/checkout.component';
 
 import './App.css';
@@ -27,8 +27,8 @@ class App extends React.Component {
     this.subscribeFromGoogle = null;
   }
   componentDidMount() {
-    
-
+    this.props.checkUserSession();
+/*
     this.subscribeFromGoogle = auth.onAuthStateChanged(async currentUser => {
       const { addCurrentUser } = this.props;
 
@@ -56,6 +56,7 @@ class App extends React.Component {
 
       // createCollection('collections', this.props.shopCollection.map(({ title, items }) => ({ title, items })));
     });
+    */
   }
   componentWillUnmount() {
     this.subscribeFromGoogle && this.subscribeFromGoogle();
@@ -89,7 +90,8 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = dispatch => ({
-  addCurrentUser: currentUser => dispatch(createCurrentUser(currentUser))
+  addCurrentUser: currentUser => dispatch(createCurrentUser(currentUser)),
+  checkUserSession: () => dispatch(checkUserSession())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

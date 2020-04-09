@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { Route } from 'react-router-dom';
 
-import { fetchShop } from '../../components/redux/shop/shop-action';
+import { fetchShopStart } from '../../components/redux/shop/shop-action';
 import CollectionOverContainer from '../../components/collection-overview/collection-overview-container';
 import CollectionOverCategory from '../../components/collection-category/collection-category-container';
 
@@ -13,14 +13,22 @@ import CollectionOverCategory from '../../components/collection-category/collect
 class Shop extends Component {
 
     componentDidMount() {
-        this.props.fetchShop();
+        console.log('=1')
+        this.props.fetchShopStart();
     }
     render() {
         const { match, loading } = this.props;
         return (
             <div className="shop-page">
-                <Route exact path={match.path} component={CollectionOverContainer}/>
-                <Route path={`${match.path}/:category`} component={CollectionOverCategory}/>
+                <Route
+                exact
+                path={`${match.path}`}
+                component={CollectionOverContainer}
+                />
+                <Route
+                path={`${match.path}/:category`}
+                component={CollectionOverCategory}
+                />
             </div>
         )
 
@@ -28,4 +36,4 @@ class Shop extends Component {
 };
 
 
-export default connect(null, { fetchShop })(Shop);
+export default connect(null, { fetchShopStart })(Shop);

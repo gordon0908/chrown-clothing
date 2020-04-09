@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-
-import { auth, createUser } from '../../firebase/firebase.util';
+import { connect } from 'react-redux';
+// import { auth, createUser } from '../../firebase/firebase.util';
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
+import { sagaSignUpStart } from '../redux/user/user-action';
 
 import './signup.scss';
 
@@ -31,6 +32,8 @@ class SignUp extends Component {
             return;
         }
 
+        this.props.sagaSignUpStart({ email, password, displayName });
+        /*
         try {
      
             const { user } = await auth.createUserWithEmailAndPassword(email, password);
@@ -48,6 +51,7 @@ class SignUp extends Component {
         } catch(e) {
             console.error('Error when signup', e.message);
         }
+        */
         
     }
     render() {
@@ -73,4 +77,4 @@ class SignUp extends Component {
     }
 };
 
-export default SignUp;
+export default connect(null, { sagaSignUpStart })(SignUp);

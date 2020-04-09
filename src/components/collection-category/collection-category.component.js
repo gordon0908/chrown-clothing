@@ -7,7 +7,7 @@ import CollectionItem from '../collection-item/collection-item.component';
 import './collection-category.scss';
 
 const CollectionCategory = ({collection: { title, items }, match}) => {
-
+console.log('============')
     return (
         <div className="collection-category">
             <span className="title">{title}</span>

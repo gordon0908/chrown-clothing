@@ -15,14 +15,23 @@ const config = {
 
 firebase.initializeApp(config);
 
-const provider = new firebase.auth.GoogleAuthProvider();
-provider.setCustomParameters({
+export const googleProvider = new firebase.auth.GoogleAuthProvider();
+googleProvider.setCustomParameters({
     prompt: 'select_account'
 });
 
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
-export const SignInWithGoogle = () => firebase.auth().signInWithPopup(provider);
+export const SignInWithGoogle = () => firebase.auth().signInWithPopup(googleProvider);
+
+export const getCurrentUser = () => {
+    return new Promise((resolve, reject) => {
+        const unsubscribe = auth.onAuthStateChanged(userAuth => {
+            unsubscribe();
+            resolve(userAuth);
+        }, () => reject({ message: 'failed to get user data'}))
+    });
+}
 
 export const createUser = async (userAuth, otherData) => {
     if (!userAuth) {

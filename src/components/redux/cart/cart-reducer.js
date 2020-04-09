@@ -1,4 +1,4 @@
-import { TOGGLE_CART, ADD_ITEM, REMOVE_ITEM, REDUCE_ITEM } from './type';
+import { TOGGLE_CART, ADD_ITEM, REMOVE_ITEM, REDUCE_ITEM, CLEAR_ITEM } from './type';
 
 const defaultState = {
     hidden: true,
@@ -49,6 +49,12 @@ export default (state = defaultState, action) => {
             return {
                 ...state,
                 items: reduceExistItem(state.items, action.payload)
+            };
+
+        case CLEAR_ITEM:
+            return {
+                ...state,
+                items: []
             }
 
         default:
