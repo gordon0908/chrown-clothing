@@ -1,80 +1,50 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
-// import { auth, createUser } from '../../firebase/firebase.util';
+
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
 import { sagaSignUpStart } from '../redux/user/user-action';
 
 import './signup.scss';
 
-class SignUp extends Component {
-    constructor() {
-        super(...arguments);
-        this.state = {
-            displayName: '',
-            email: '',
-            password: '',
-            passwordConfirm: ''
-        }
-    }
-    handleChange = e => {
+const SignUp = ({ sagaSignUpStart }) => {
+    const [credential, setCredential] = useState({ email: '', password: '', passwordConfirm: '', displayName: ''});
+
+    const { displayName, email, password, passwordConfirm } = credential;
+
+    const handleChange = e => {
         const { name, value } = e.target;
-        this.setState({
-            [name]: value
-        })
+        setCredential({ ...credential, [name]: value});
     }
-    handleSubmit = async e => {
+    const handleSubmit = async e => {
         e.preventDefault();
-        const { displayName, email, password, passwordConfirm } = this.state;
 
         if (password !== passwordConfirm) {
             alert('password do not match');
             return;
         }
 
-        this.props.sagaSignUpStart({ email, password, displayName });
-        /*
-        try {
-     
-            const { user } = await auth.createUserWithEmailAndPassword(email, password);
- 
-            await createUser(user, { displayName });
-
-            this.setState({
-                displayName:'',
-                email: '',
-                password: '',
-                passwordConfirm: ''
-            });
-
-            
-        } catch(e) {
-            console.error('Error when signup', e.message);
-        }
-        */
-        
+        sagaSignUpStart({ email, password, displayName });
     }
-    render() {
-        const { displayName, email, password, passwordConfirm } = this.state;
-        return (
-            <div className="sign-up">
-                <h2 className="title">I do not have account</h2>
-                <span>Sign up with your email and password</span>
+    return (
+        <div className="sign-up">
+            <h2 className="title">I do not have account</h2>
+            <span>Sign up with your email and password</span>
 
-                <form className="sign-up-form" onSubmit={this.handleSubmit}>
-                    <FormInput type="text" name="displayName" value={displayName} onChange={this.handleChange} lable="Display Name" require="true"/>
+            <form className="sign-up-form" onSubmit={handleSubmit}>
+                <FormInput type="text" name="displayName" value={displayName} onChange={handleChange} lable="Display Name" require="true"/>
 
-                    <FormInput type="text" name="email" value={email} onChange={this.handleChange} lable="email" require="true"/>
+                <FormInput type="text" name="email" value={email} onChange={handleChange} lable="email" require="true"/>
 
-                    <FormInput type="text" name="password" value={password} onChange={this.handleChange} lable="Password" require="true"/>
+                <FormInput type="text" name="password" value={password} onChange={handleChange} lable="Password" require="true"/>
 
-                    <FormInput type="text" name="passwordConfirm" value={passwordConfirm} onChange={this.handleChange} lable="Password Confirm" require="true"/>
+                <FormInput type="text" name="passwordConfirm" value={passwordConfirm} onChange={handleChange} lable="Password Confirm" require="true"/>
 
-                    <CustomButton type="submit">Sign Up</CustomButton>
-                </form>
-            </div>
-        )
-    }
-};
+                <CustomButton type="submit">Sign Up</CustomButton>
+            </form>
+        </div>
+    )
+
+}
 
 export default connect(null, { sagaSignUpStart })(SignUp);
