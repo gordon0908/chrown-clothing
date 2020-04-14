@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Profiler } from 'react';
 
 
 import { HomePageStyled } from './homepage.styled';
@@ -9,7 +9,12 @@ const Homepage = () => {
     // throw Error;
     return (
         <HomePageStyled>
-            <Directory />
+            <Profiler id="directory" onRender={(id, phase, actualDuration, baseDuration, startTime, commitTime) => {
+                console.log(id, phase, actualDuration, baseDuration, startTime, commitTime)
+            }}>
+                <Directory />
+            </Profiler>
+            
         </HomePageStyled>
     );
 }

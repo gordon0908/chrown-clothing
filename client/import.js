@@ -2,6 +2,7 @@ import { version } from "react"
 import { MemoryRouter } from "react-router-dom"
 import { selectCartItems } from "./src/components/redux/cart/cart-selector"
 import { ServerStyleSheet } from "styled-components"
+import Homepage from "./src/pages/homepage/homepage.component"
 https://crown-clothing-gt.herokuapp.com/
 
 sesion 14, heroku 
@@ -9,7 +10,7 @@ sesion 14, heroku
     heroku --versionh
     heroku login 
     heroku create crown-clothing-gt --buildpack https://github.com/mars/create-react-app-buildpack
-    heroku push heroku master
+    git push heroku master
 }
 session 22, deploy code to production
 {
@@ -38,4 +39,5 @@ section 26 performance
     6, useMemo => for cache value only 
        useMemo(()=>{ return count+123;}, [count1])
     7, install compression => check Server.js  how to use Gzipping
+    8, Profiler in react => Homepage.component.jsx for example 
 }
