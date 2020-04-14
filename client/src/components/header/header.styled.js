@@ -12,12 +12,21 @@ export const HeaderContainer = Styled.div`
     width: 100%;
     height: 70%;
     margin-bottom: 25px;
+    @media screen and (max-width: 800px){
+        padding: 10px;
+        margin-bottom: 10px;
+        height: 60px;
+    }
 `;
 
 export const LogoContainer = Styled(Link)`
     height: 100%;
     width:75%;
     padding: 25px;
+    @media screen and (max-width: 800px){
+        padding: 0px;
+        width: 20%
+    }
 `;
 
 export const HeaderOptions = Styled.div`
@@ -25,6 +34,9 @@ export const HeaderOptions = Styled.div`
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    @media screen and (max-width: 800px){
+        width: 80%;
+    }
 `;
 
 export const HeaderOptionLink = Styled(Link)`
